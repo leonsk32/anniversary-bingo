@@ -15,24 +15,34 @@
                             outlined
                             tile
                     >
-                        <div class="date-box" @click="showList(k, n)">
+                        <div class="date-box">
                             <p class="date">{{dates[k-1][n-1]}}</p>
                         </div>
                     </v-card>
                 </v-col>
             </v-row>
         </v-container>
+        <input v-model="submission" background-color="red" style="margin-top: 100px"></input>
+        <v-btn @click="submit">submit</v-btn>
     </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
+import Firebase from '@/plugins/Firebase';
 
 @Component
 export default class Bingo extends Vue {
   private dates = [['', '', ''], ['', '', ''], ['', '', '']];
+  private answers: string[] = [];
+  private submission: string = '';
 
   public created() {
     this.dates = this.$store.getters.getDates;
+    Firebase.onAnswerSubmitted((answer: string) => this.answers.push(answer));
+  }
+
+  public submit() {
+    Firebase.submitAnswer(this.submission);
   }
 }
 </script>
@@ -56,20 +66,5 @@ export default class Bingo extends Vue {
         width: 100%;
         text-align: center;
         margin: 0 0;
-    }
-
-    #overlay {
-        z-index: 1;
-
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

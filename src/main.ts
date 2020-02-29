@@ -4,8 +4,11 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 import vuetify from './plugins/vuetify';
+import Firebase from '@/plugins/Firebase';
 
 Vue.config.productionTip = false;
+
+Firebase.init();
 
 new Vue({
   router,
