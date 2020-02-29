@@ -35,7 +35,7 @@
         </div>
         <div id="overlay" v-if="isListVisible">
             <v-list
-                    dense
+                    width="90%"
                     style="max-height: 60%; overflow-y: auto"
             >
                 <v-subheader>セットする日付を選んでください</v-subheader>
