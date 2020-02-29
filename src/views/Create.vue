@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container class="grey lighten-5">
+        <v-container style="margin-right: 0">
             <v-row
                     no-gutters
                     v-for="k in 3"
@@ -15,19 +15,23 @@
                             outlined
                             tile
                     >
-                        <div class="date-box" @click="showList(k, n)">
+                        <div class="touch-date-box" @click="showList(k, n)"></div>
+                        <div class="date-box">
                             <p class="date">{{dates[k-1][n-1]}}</p>
                         </div>
                     </v-card>
                 </v-col>
             </v-row>
         </v-container>
-        <div style="width: 100%">
-            <router-link to="/bingo" >
-                <v-btn color="primary" style="align-content: center;">
-                    作成！！
-                </v-btn>
-            </router-link>
+        <div style="width: 100%; padding-top: 10px">
+            <v-btn
+                    style="width: 100%;"
+                    v-bind:color="isCompleted ? 'primary' : 'disabled'"
+                    @click="create"
+                    v-bind:disabled="!isCompleted"
+            >
+                作成！！
+            </v-btn>
         </div>
         <div id="overlay" v-if="isListVisible">
             <v-list
@@ -63,6 +67,7 @@ export default class Create extends Vue {
     '31',
   ];
   private selected = [0, 0];
+  private isCompleted = false;
 
   public showList(k: number, n: number) {
     this.isListVisible = true;
@@ -81,6 +86,13 @@ export default class Create extends Vue {
       this.items.push(before);
       this.items.sort(((a, b) => Number(a) - Number(b)));
     }
+
+    this.isCompleted = this.items.length === 22;
+  }
+
+  public create() {
+    this.$store.commit('setDates', this.dates);
+    this.$router.push('/bingo');
   }
 }
 </script>
@@ -88,6 +100,15 @@ export default class Create extends Vue {
     .pa-2 {
         width: 100%;
         padding-top: 100%;
+    }
+
+    .touch-date-box {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
     .date-box {
@@ -107,7 +128,7 @@ export default class Create extends Vue {
     }
 
     #overlay {
-        z-index: 1;
+        z-index: 100;
 
         position: fixed;
         top: 0;
