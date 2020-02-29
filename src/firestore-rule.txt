@@ -2,6 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
   	match /games/bingo {
+    	allow delete: if true;
+
       match /answers/{document=**} {
         allow write: if true;
         allow read: if true;

@@ -27,8 +27,6 @@
                 </v-col>
             </v-row>
         </v-container>
-        <input v-model="submission" background-color="red" style="margin-top: 100px"></input>
-        <v-btn @click="submit">submit</v-btn>
     </div>
 </template>
 <script lang="ts">
@@ -43,7 +41,11 @@ export default class Bingo extends Vue {
 
   public created() {
     this.dates = this.$store.getters.getDates;
-    Firebase.onAnswerSubmitted((answer: string) => this.answers.push(answer));
+    Firebase.onAnswerSubmitted(
+      (answer: string) => this.answers.push(answer),
+      (answer: string) => this.answers = this.answers.filter((value: string) => value !== answer),
+
+    );
   }
 
   public submit() {
