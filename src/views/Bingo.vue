@@ -66,7 +66,12 @@ export default class Bingo extends Vue {
       (k === n &&
         this.isHit(1, 1) &&
         this.isHit(2, 2) &&
-        this.isHit(3, 3))) {
+        this.isHit(3, 3)) ||
+      (k + n === 4 &&
+        this.isHit(1, 3) &&
+        this.isHit(2, 2) &&
+        this.isHit(3, 1))
+    ) {
       return 'bingo';
     }
 
