@@ -7,7 +7,9 @@
         >
         </v-select>
         <div style="width: 100%; height: 30px">
-            <v-btn @click="submit" color="primary" style="position: absolute; left: 0">submit</v-btn>
+            <v-btn @click="submit" color="primary" style="position: absolute; left: 0"
+                v-bind:disabled="submission === ''"
+            >submit</v-btn>
             <v-btn @click="reset" color="error" style="position: absolute; right: 0">reset</v-btn>
         </div>
         <v-data-table
